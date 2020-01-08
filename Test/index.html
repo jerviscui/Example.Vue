@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">
+        <meta content="ie=edge" http-equiv="X-UA-Compatible">
+        <script charset="utf-8" src="vue.js" type="text/javascript"></script>
+        <title>Document</title>
+    </head>
+
+    <body>
+        <div id="app">
+            <h3>{{name}}</h3>
+            <span>{{abc}}</span>
+            {{message}}
+        </div>
+        <div id="vm">
+            {{message}}
+        </div>
+    </body>
+    <script type="text/javascript">
+        var data = {
+            message: "this is a Test.",
+            name: "Xiaoming",
+            abc: "abc"
+        };
+        var app = new Vue({el: '#app', data: data});
+
+        app.$watch('message', function (newValue, oldValue) {
+            console.log(newValue, oldValue);
+        });
+
+        app.name = "111";
+        app.$data.message = "changed";
+
+        var vm = new Vue({
+            el: '#vm',
+            data: {
+                message: "aaaaaa message."
+            },
+            beforeCreate: function(){
+                console.log("vm beforeCreate");
+            },
+            created: function(){
+                console.log("vm created");
+            },
+            beforeMount: function(){
+                console.log("vm beforeMount");
+            },
+            mounted: function(){
+                console.log("vm mounted");
+            },
+            beforeDestroy: function(){
+                console.log("vm beforeDestroy");
+            },
+            destroyed: function(){
+                console.log("vm destroyed");
+            },
+            beforeUpdate: function(){
+                console.log("vm beforeUpdate");
+            },
+            updated: function(){
+                console.log("vm updated");
+            },
+            activated: function(){
+                console.log("vm activated");
+            },
+            deactivated: function(){
+                console.log("vm deactivated");
+            },            
+            errorCaptured : function(err, errComponent, info){
+                console.log("vm err " + info);
+                return false;
+            }
+        });
+
+        vm.message = "a changed message.";
+    </script>
+
+</html>
