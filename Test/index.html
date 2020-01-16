@@ -25,11 +25,16 @@
             name: "Xiaoming",
             abc: "abc"
         };
+
+        // Object.freeze(data);
+
         var app = new Vue({el: '#app', data: data});
 
         app.$watch('message', function (newValue, oldValue) {
             console.log(newValue, oldValue);
         });
+
+        data.abc = "def";
 
         app.name = "111";
         app.$data.message = "changed";
