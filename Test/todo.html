@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="ie=edge" http-equiv="X-UA-Compatible">
+    <script charset="utf-8" src="vue.js" type="text/javascript"></script>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="todo-list">
+        <form @submit.prevent="addNewTodo">
+            <label for="new-todo"></label>
+            <input id="new-todo" type="text" placeholder="E.g. Feed the cat" v-model="newTodoText">
+            <button>增加</button>
+        </form>
+
+        <ul>
+            <!-- <todo-item  v-for="(todo, index) in todos" :key="todo.id" :title="todo.title" @remove="removeItem(index)">
+            </todo-item> -->
+            <li is="todo-item" v-for="(todo, index) in todos" :key="todo.id" :title="todo.title" @remove="removeItem(index)">
+            </li>            
+        </ul>
+    </div>
+</body>
+<script type="text/javascript">
+    Vue.component('todo-item', {
+        template: '\
+            <li>\
+                {{title}}\
+                <button @click="$emit(\'remove\')">Remove</button>\
+            </li>',
+        props: ["title"]
+    });
+
+    var vm = new Vue({
+        el: "#todo-list",
+        data: {
+            newTodoText: "",
+            todos: [
+                {
+                    id: 1,
+                    title: 'Do the dishes',
+                },
+                {
+                    id: 2,
+                    title: 'Take out the trash',
+                },
+                {
+                    id: 3,
+                    title: 'Mow the lawn'
+                }
+            ],
+            nxtId: 4
+        },
+        methods: {
+            addNewTodo: function () {
+                if (this.newTodoText.trim().length == 0) {
+                    alert('不能为空');
+                    return;
+                }
+
+                this.todos.push({ id: this.nxtId, title: this.newTodoText });
+                this.nxtId++;
+            },
+            removeItem: function (index) {
+                this.todos.splice(index, 1);
+            }
+        }
+    });
+</script>
+
+</html>
